@@ -838,6 +838,8 @@ Two methods will be used here. The overall concordance coefficient and the intra
 
 ```{r}
 library(irr)
+library(epiR)
+library(epifitter)
 
 sad_UN <- dat_cls %>%
   dplyr::select(rater, UNexp) %>%
@@ -944,6 +946,13 @@ sd(means$s_shift_2)
 ```
 
 ##########combined plots for whole data
+
+```{r}
+dat_sad_UN=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/yield.csv")
+attach(dat_sad_UN)
+```
+
+
 ```{r}
 dat_sad_UN <- dat_sad %>%
   group_by(rater) %>%
@@ -952,7 +961,7 @@ View(dat_sad_UN)
 ```
 
 ```{r}
-m2=epi.ccc(dat_sad_UN$actual, dat_sad_UN$estimate, ci = "z-transform", conf.level = 0.95)
+m2=epi.ccc(dat_sad_UN$Measured, dat_sad_UN$Simulated, ci = "z-transform", conf.level = 0.95)
 ```
 
 ```{r}
@@ -963,7 +972,7 @@ rval.labun <- data.frame(lab = paste("CCC: ",
 ```
 
 ```{r}
-k <- lm(dat_sad_UN$estimate ~ dat_sad_UN$actual)
+k <- lm(dat_sad_UN$Simulated ~ dat_sad_UN$Measured)
 alpha <- summary(k)$coefficients[1,1]
 beta <-  summary(k)$coefficients[2,1]
 rval.un <- data.frame(alpha, beta)
@@ -973,15 +982,18 @@ rval.un <- data.frame(alpha, beta)
 ## Not run: 
 library(ggplot2)
 individual 
+###load the data######
+
+
 ```{r}
-m2=ggplot(data = dat_sad_UN, aes(x = dat_sad_UN$actual, y = dat_sad_UN$estimate)) +
+m2=ggplot(data = dat_sad_UN, aes(x = Simulated, y = Measured)) +
   theme_bw() +
   geom_point()+
   geom_abline(intercept = 0, slope = 1) +
   geom_abline(data = rval.un, aes(intercept = alpha, slope = beta), 
      linetype = "dashed") +
-  scale_x_continuous(limits = c(0,100), name = "Actual severity (%)") +
-  scale_y_continuous(limits = c(0,100), name = "Estimated severity (%)") +
+  scale_x_continuous(limits = c(0,1000), name = "Simulated yield (Kg/ha)") +
+  scale_y_continuous(limits = c(0,1000), name = "Measured yield (Kg/ha)") +
   geom_text(data = rval.labun, x = 0.5, y = 2.95, label = rval.labun$lab) + 
   coord_fixed(ratio = 1 / 1)+
   theme(axis.text.x = element_text(angle = 90,size = 15))+
@@ -992,6 +1004,8 @@ m2
 ```
 
 ##########combined plots for whole data with SAD
+
+
 ```{r}
 dat_sad_LIN <- dat_sad %>%
   group_by(rater) %>%
@@ -1139,8 +1153,19 @@ model_performance(exp)
 #####R1
 
 ```{r}
+library(lme4)
+library(lmerTest)
+library(epiR)
+library(epifitter)
+library(dplyr)
+library(ggplot2)
+```
+
+
+```{r}
 actuals <- dat_cls %>%
   filter(rater == 1)
+actuals=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/maturity.csv")
 ```
 
 ```{r}
@@ -1148,7 +1173,7 @@ attach(actuals)
 ```
 
 ```{r}
-a=epi.ccc(actuals$actual,actuals$UNexp,
+a=epi.ccc(actuals$Simulated,actuals$Measured,
           ci = "z-transform", conf.level = 0.95, 
           rep.measure = FALSE)
 a$rho.c
@@ -1164,7 +1189,7 @@ ag1b=data.frame(lab = paste("CCC: ",    round(a$rho.c[,1], digits = 2), " (95% C
 ```
 
 ```{r}
-a2 <- lm(actuals$actual ~ actuals$UNexp)
+a2 <- lm(actuals$Simulated ~ actuals$Measured)
 alpha <- summary(a2)$coefficients[1,1]
 beta <-  summary(a2)$coefficients[2,1]
 a3 <- data.frame(alpha, beta)
@@ -1176,14 +1201,14 @@ summary(a2)
 
 ```{r}
 library(ggplot2)
-r1=ggplot(data = actuals, aes(x = actuals$actual, y = actuals$UNexp)) +
+r1=ggplot(data = actuals, aes(x = actuals$Simulated, y = actuals$Measured)) +
   theme_bw() +
   geom_point() +
   geom_abline(intercept = 0, slope = 1) +
   geom_abline(data = a3, aes(intercept = alpha, slope = beta), 
      linetype = "dashed") +
-  scale_x_continuous(limits = c(0,100), name = "") +
-  scale_y_continuous(limits = c(0,100), name = "Estimated (%)")+theme(axis.text.x = element_text(angle = 90,size = 15))+
+  scale_x_continuous(limits = c(120,140), name = "") +
+  scale_y_continuous(limits = c(120,140), name = "Estimated (%)")+theme(axis.text.x = element_text(angle = 90,size = 15))+
   theme(axis.text.y = element_text(angle = 0,size = 15))+
   geom_text(data = ag1b, x = 3, y = 4, label = ag1b$lab) + 
   coord_fixed(ratio = 1 / 1)+theme(panel.grid = element_blank())
@@ -1198,14 +1223,15 @@ R2
 ```{r}
 actuals <- dat_cls %>%
   filter(rater == 2)
+actualz=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/yield.csv")
 ```
 
 ```{r}
-attach(actuals)
+attach(actualz)
 ```
 
 ```{r}
-a=epi.ccc(actuals$actual,actuals$UNexp,
+a=epi.ccc(actualz$Simulated,actualz$Measured,
           ci = "z-transform", conf.level = 0.95, 
           rep.measure = FALSE)
 a$rho.c
@@ -1221,7 +1247,7 @@ ag1b=data.frame(lab = paste("CCC: ",    round(a$rho.c[,1], digits = 2), " (95% C
 ```
 
 ```{r}
-a2 <- lm(actuals$actual ~ actuals$UNexp)
+a2 <- lm(actualz$Simulated ~ actualz$Simulated)
 alpha <- summary(a2)$coefficients[1,1]
 beta <-  summary(a2)$coefficients[2,1]
 a3 <- data.frame(alpha, beta)
@@ -1233,14 +1259,14 @@ summary(a2)
 
 ```{r}
 library(ggplot2)
-r2=ggplot(data = actuals, aes(x = actuals$actual, y = actuals$UNexp)) +
+r2=ggplot(data = actuals, aes(x = actualz$Measured, y = actuals$Simulated)) +
   theme_bw() +
   geom_point() +
   geom_abline(intercept = 0, slope = 1) +
   geom_abline(data = a3, aes(intercept = alpha, slope = beta), 
      linetype = "dashed") +
-  scale_x_continuous(limits = c(0,100), name = "") +
-  scale_y_continuous(limits = c(0,100), name = "Estimated (%)")+theme(axis.text.x = element_text(angle = 90,size = 15))+
+  scale_x_continuous(limits = c(0,1000), name = "") +
+  scale_y_continuous(limits = c(0,1000), name = "Estimated (%)")+theme(axis.text.x = element_text(angle = 90,size = 15))+
   theme(axis.text.y = element_text(angle = 0,size = 15))+
   geom_text(data = ag1b, x = 3, y = 4, label = ag1b$lab) + 
   coord_fixed(ratio = 1 / 1)+theme(panel.grid = element_blank())
@@ -1987,4 +2013,6 @@ E8=ggplot(data = actuals, aes(x = actuals$actual, y = actuals$LINexp)) +
   coord_fixed(ratio = 1 / 1)+theme(panel.grid = element_blank())
 E8
 ```
+
+
 

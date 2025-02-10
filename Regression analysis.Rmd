@@ -10,22 +10,23 @@ library(ggplot2)
 ```
 
 ```{r}
-yield=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/yield.csv")
-attach(yield)
+wt=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/top_weight.csv")
+attach(anthesis)
 ```
 
 ```{r}
-lmod=lm(Simulated~Measured,yield)
+lmod=lm(Simulated~Measured,wt)
 summary(lmod)
 ```
 
 ```{r}
-ggplot(yield,aes(Simulated,Measured))+
-  geom_point()+
+ggplot(wt,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
   geom_smooth(method = "lm",se=0)+
   theme_classic()+
-  annotate("text",x=700,y=750,label="
-           p value=0.03")+annotate("text",x=600,y=750,label="
+  annotate("text",x=2000,y=2500,label="
+           p value=0.03")+annotate("text",x=2500,y=2500,label="
            R-squared=0.71")
 ```
 

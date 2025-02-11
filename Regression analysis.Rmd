@@ -10,23 +10,47 @@ library(ggplot2)
 ```
 
 ```{r}
-wt=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/top_weight.csv")
-attach(anthesis)
+yld=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/yield.csv")
+attach(yld)
 ```
 
 ```{r}
-lmod=lm(Simulated~Measured,wt)
+lmod=lm(Measured~Simulated,yld)
 summary(lmod)
 ```
 
 ```{r}
-ggplot(wt,aes(Simulated,Measured))+
+ggplot(yld,aes(Simulated,Measured))+
   geom_point(aes(colour = ))+
   geom_point(size=5, shape=17)+
   geom_smooth(method = "lm",se=0)+
   theme_classic()+
-  annotate("text",x=2000,y=2500,label="
-           p value=0.03")+annotate("text",x=2500,y=2500,label="
-           R-squared=0.71")
+  annotate("text",x=600,y=800,label="")+annotate("text",x=700,y=800,label="")+
+  scale_x_continuous(limits = c(530,1000), name = "Measured yield (kg/ha)") +
+  scale_y_continuous(limits = c(530,1000), name = "Simulated yield (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
 ```
 
+```{r}
+yldev=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/yield eval.csv")
+attach(yldev)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,yldev) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(yldev,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=300,y=600,label="")+annotate("text",x=500,y=600,label="")+
+  scale_x_continuous(limits = c(100,1000), name = "Measured yield (kg/ha)") +
+  scale_y_continuous(limits = c(100,600), name = "Simulated yield (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```

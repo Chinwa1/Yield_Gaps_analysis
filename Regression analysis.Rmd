@@ -54,3 +54,142 @@ ggplot(yldev,aes(Simulated,Measured))+
   theme(axis.text.y = element_text(angle = 0,size = 15))+
   theme(axis.title.y = element_text(size = 15))
 ```
+```{r}
+pw=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/Pod weight.csv", header = TRUE)
+attach(pw)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,pw) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(pw,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=800,y=600,label="")+annotate("text",x=500,y=600,label="")+
+  scale_x_continuous(limits = c(800,1300), name = "Measured Pod weight (kg/ha)") +
+  scale_y_continuous(limits = c(700,1300), name = "Simulated Pod weight (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
+```{r}
+pwv=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/Pod weight_eval.csv", header = TRUE)
+attach(pwv)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,pwv) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(pwv,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=800,y=600,label="")+annotate("text",x=500,y=600,label="")+
+  scale_x_continuous(limits = c(150,1300), name = "Measured Pod weight (kg/ha)") +
+  scale_y_continuous(limits = c(100,700), name = "Simulated Pod weight (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
+```{r}
+tw=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/top_weight.csv", header = TRUE)
+attach(tw)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,tw) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(tw,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=2000,y=2700,label="")+annotate("text",x=1200,y=3000,label="")+
+  scale_x_continuous(limits = c(1100,3000), name = "Measured Top weight (kg/ha)") +
+  scale_y_continuous(limits = c(1800,3000), name = "Simulated Top weight (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
+
+```{r}
+twv=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/top_weight eval.csv", header = TRUE)
+attach(twv)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,twv) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(twv,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=2000,y=2700,label="")+annotate("text",x=1200,y=3000,label="")+
+  scale_x_continuous(limits = c(400,3000), name = "Measured Top weight (kg/ha)") +
+  scale_y_continuous(limits = c(1400,3000), name = "Simulated Top weight (kg/ha)")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
+```{r}
+mt=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/maturity.csv", header = TRUE)
+attach(mt)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,mt) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(mt,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=2000,y=2700,label="")+annotate("text",x=1200,y=3000,label="")+
+  scale_x_continuous(limits = c(120,135), name = "Measured days to maturity") +
+  scale_y_continuous(limits = c(120,135), name = "Simulated days to maturity")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
+```{r}
+mtv=read.csv("C:/Users/hchin/OneDrive/Atlantic Beach/Documents/PhD/DPhil/Yield_Gap_analysis/Yield_Gaps/Glasshouse/maturity eval.csv", header = TRUE)
+attach(mtv)
+```
+
+```{r}
+lmod=lm(Measured~Simulated,mtv) 
+summary(lmod)
+```
+
+```{r Perform ggplot}
+ggplot(mtv,aes(Simulated,Measured))+
+  geom_point(aes(colour = ))+
+  geom_point(size=5, shape=17)+
+  geom_smooth(method = "lm",se=0)+
+  theme_classic()+
+  annotate("text",x=2000,y=2700,label="")+annotate("text",x=1200,y=3000,label="")+
+  scale_x_continuous(limits = c(108,120), name = "Measured days to maturity") +
+  scale_y_continuous(limits = c(100,120), name = "Simulated days to maturity")+theme(axis.text.x = element_text(angle = 90,size = 15))+theme(axis.title.x = element_text(size = 15))+
+  theme(axis.text.y = element_text(angle = 0,size = 15))+
+  theme(axis.title.y = element_text(size = 15))
+```
+
